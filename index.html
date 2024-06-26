@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dealer Motor Resmi</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-jQ3JQ7nqBRx4MwR5fD8sqFQ/cXqU/0i1F5Qemw4LVsBhZKqypYvPtMfmXUDBvJ5fK4ODZPMuFWn7evSoJDf5Eg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header class="bg-gray-100 shadow-md">
+        <div class="container mx-auto px-4 py-4 flex justify-center items-center">
+            <img src="src/img/logo-lp3i.png" alt="Logo Politeknik LP3I Kampus Tasikmalaya" class="h-10">
+        </div>
+    </header>
+    <main class="container mx-auto p-4">
+        <h2 class="text-2xl font-bold text-center mb-4">Dealer Motor Resmi</h2>
+        <p class="text-center mb-8">Berikut ini adalah beberapa motor yang tersedia:</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6" id="productGrid">
+            <!-- Produk akan ditampilkan di sini -->
+        </div>
+    </main>
+    <footer class="bg-gray-800 mt-8 py-4">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm text-white">© 2023 Materi kuliah Front End Development by kanglotri | Politeknik LP3I Kampus Tasikmalaya</p>
+        </div>
+    </footer>
+    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const apiUrl = 'http://localhost:3000/product';
+        
+        const getProducts = async () => {
+            try {
+                const response = await axios.get(apiUrl);
+                const products = response.data;
+                let productGrid = document.getElementById('productGrid');
+                let productHTML = '';
+                
+                products.forEach(product => {
+                    productHTML += `
+                        <div class="bg-white p-4 rounded-lg shadow-lg border-md">
+                            <img src="${product.foto}" alt="${product.nama}" class="w-full h-40 object-cover rounded-t-lg">
+                            <div class="mt-4">
+                                <h3 class="text-lg font-bold">${product.nama}</h3>
+                                <p class="text-gray-600 mb-2">${product.deskripsi}</p>
+                                <span class="inline-block bg-${product.kategori === 'AT' ? 'blue' : 'yellow'}-100 text-${product.kategori === 'AT' ? 'blue' : 'yellow'}-800 text-sm px-2 py-1 rounded-full font-semibold mb-2">${product.kategori}</span>
+                                <p class="text-green-600 font-bold">Rp${product.harga.toLocaleString()}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                productGrid.innerHTML = productHTML;
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
+        
+        document.addEventListener('DOMContentLoaded', getProducts);
+    </script>
+</body>
+</html>
