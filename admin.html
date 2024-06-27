@@ -80,7 +80,7 @@
 </main>
 <footer class="bg-white mt-8 py-4">
     <div class="container mx-auto px-4 text-center">
-        <p class="text-sm text-gray-600">© 2024 Materi kuliah Front End Development by kanglotri | Politeknik LP3I Kampus Tasikmalaya</p>
+        <p class="text-sm text-gray-600">© 2024 Materi kuliah Front End Development by AR Project | Politeknik LP3I Kampus Tasikmalaya</p>
     </div>
 </footer>
 
@@ -160,6 +160,10 @@
         let harga = document.getElementById('harga').value;
         let deskripsi = document.getElementById('deskripsi').value;
 
+        if(!foto){
+            alert("Masukan gambar");
+            return
+        }
         let reader = new FileReader();
         reader.readAsDataURL(foto);
         reader.onloadend = async () => {
